@@ -16,12 +16,14 @@ private static final char EMPTY = ' ';
 		   */ 
 		  public boolean checkRows() {
 			 int count = 0;
+			 outer:
 			  for (int i = 0; i < board.length; i++) {
 				  count = 0;
 				for (int j = 1; j < board[i].length; j++) {
-					if(board[i][0] == board[i][j]) {
-						count++;
+					if(board[i][0] == EMPTY || board[i][0] != board[i][j]) {
+						continue outer;
 					}
+					count++;
 				}
 				if(count == board[i].length-1) {
 					return true;
@@ -38,12 +40,14 @@ private static final char EMPTY = ' ';
 		    */ 
 		   public boolean checkColumns() { 
 			   int count = 0;
+			   outer:
 				  for (int i = 0; i < board.length; i++) {
 					  count = 0;
 					for (int j = 1; j < board[i].length; j++) {
-						if(board[0][i] == board[j][i]) {
-							count++;
+						if(board[0][i] == EMPTY || board[0][i] != board[j][i]) {
+							continue outer;
 						}
+						count++;
 					}
 					if(count == board.length-1) {
 						return true;
@@ -62,7 +66,7 @@ private static final char EMPTY = ' ';
 		    // Check top-left to bottom-right
 			   boolean check = true;
 			   for (int i = 1; i < board.length; i++) {
-				if(board[0][0] != board[i][i]) {
+				if(board[0][0] != board[i][i] || board[0][0] == EMPTY) {
 					check = false;
 					break;
 				}
@@ -75,7 +79,7 @@ private static final char EMPTY = ' ';
 			   }
 		  // Check bottom-left to top-right 
 			   for (int i = 1; i < board.length; i++) {
-				if(board[0][board.length-1] != board[i][board.length-1-i]) {
+				if(board[0][board.length-1] != board[i][board.length-1-i] || board[0][board.length-1] == EMPTY) {
 					check = false;
 					break;
 				}
@@ -84,7 +88,7 @@ private static final char EMPTY = ' ';
 		  } 
 		   
 		   public static void main(String[] args) {
-			char[][] arr = new char[][] {{'X', 'X', 'X'}, {EMPTY, 'X', EMPTY}, {'O', 'O', 'X'}};
+			char[][] arr = new char[][] {{'X', 'X', 'O'}, {EMPTY, 'X', 'O'}, {'O', 'X', 'X'}};
 			TicTacToe t = new TicTacToe(arr);
 			System.out.println(t.checkRows());
 			System.out.println(t.checkColumns());
